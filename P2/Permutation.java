@@ -10,7 +10,7 @@ public class Permutation{
     
     public static void main(String[] args){
         int k = Integer.parseInt(args[0]);
-        RandomizedQueue<String> rq = new RandomizedQueue<String>(k);
+        RandomizedQueue<String> rq = new RandomizedQueue<String>();
         int n = 0;
         In in = new In(args[2]);      // input file
         while (!in.isEmpty()) {

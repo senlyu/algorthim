@@ -11,7 +11,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
         // construct an empty randomized queue
         a =(Item[]) new Object[maxsize];
     }
-    public RandomizedQueue(int n){
+    private RandomizedQueue(int n){
         // construct an empty randomized queue
         maxsize = n;
         a =(Item[]) new Object[maxsize];
@@ -40,7 +40,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
     public Item dequeue(){
         // remove and return a random item
         if (maxsize >= 4 * size){
-            newa =(Item[]) new Object[maxsize / 2];
+            //newa =(Item[]) new Object[maxsize / 2];
             for (int i = 1; i <= size; i++) {
                 newa[i] = a[i];
             }
@@ -65,7 +65,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
         // return an independent iterator over items in random order
         return new ItemIterator();
     }
-    public class ItemIterator implements Iterator<Item>{
+    private class ItemIterator implements Iterator<Item>{
         private int countn = size;
         @Override
         public boolean hasNext(){
