@@ -1,11 +1,12 @@
+import java.util.ArrayList;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class BruteCollinearPoints {
     
-    private int n;
-    private LineSegment[] ls;
+    private ArrayList<LineSegment> ls;
     
     public BruteCollinearPoints(Point[] points) {
         // finds all line segments containing 4 points
@@ -39,13 +40,8 @@ public class BruteCollinearPoints {
                 points[i] =swapp;
             }
         }
-        for (Point i: points){
-            System.out.println(i);
-        }
 
-        n = 0;
-        
-        
+        ls = new ArrayList<LineSegment>();
         for (int i1 = 0; i1 < points.length; i1++) {
             for (int i2 = i1 + 1; i2 < points.length; i2++) {
                 for (int i3 = i2 + 1; i3 < points.length; i3++) {
@@ -54,19 +50,7 @@ public class BruteCollinearPoints {
                         if ((points[i1].slopeTo(points[i2]) == points[i1].slopeTo(points[i3])) &&
                                 (points[i1].slopeTo(points[i3]) == points[i1].slopeTo(points[i4])) && 
                                 (points[i1].slopeTo(points[i4]) == points[i1].slopeTo(points[i2]))) {
-                            System.out.println(i1 + " " + i2 + " " + i3 + " " + i4);
-                            System.out.println((points[i1].slopeTo(points[i2])));
-                            System.out.println((points[i1].slopeTo(points[i3])));
-                            System.out.println((points[i1].slopeTo(points[i4])));
-                            LineSegment[] lsnew = new LineSegment[n+1];
-                            if (ls != null) {
-                                for (int i = 0; i < ls.length; i++) {
-                                    lsnew[i] = ls[i];
-                                }
-                            }
-                            lsnew[n] = new LineSegment(points[i1],points[i4]);
-                            ls = lsnew;
-                            n++;
+                            ls.add(new LineSegment(points[i1],points[i4]));
                         }
                     }
                 }
@@ -75,12 +59,11 @@ public class BruteCollinearPoints {
     }
     public int numberOfSegments() {
         // the number of line segments
-        return n+1;
+        return ls.size();
     }
     public LineSegment[] segments() {
         // the line segments
-        
-        return ls;
+        return ls.toArray(new LineSegment[ls.size()]);
         
     }
     public static void main(String[] args) {
