@@ -3,14 +3,14 @@ import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item>{
    
-   private class Node{
+   private class Node<Item>{
        Item item;
-       Node next;
-       Node ahead;
+       Node<Item> next;
+       Node<Item> ahead;
    }
    
-   private Node front = new Node();
-   private Node end = new Node();
+   private Node<Item> front = new Node<Item>();
+   private Node<Item> end = new Node<Item>();
    private int size = 0;
    
    public Deque(){
@@ -27,7 +27,10 @@ public class Deque<Item> implements Iterable<Item>{
    }
    public void addFirst(Item item){
        // add the item to the front
-       Node newone = new Node();
+       if (item == null) {
+           throw new java.lang.NullPointerException("You want to add empty element");
+       }
+       Node<Item> newone = new Node<Item>();
        newone.item = item;
        if (!isEmpty()){
            newone.next = front;
@@ -40,7 +43,10 @@ public class Deque<Item> implements Iterable<Item>{
    }
    public void addLast(Item item){
        // add the item to the end
-       Node newone = new Node();
+       if (item == null) {
+           throw new java.lang.NullPointerException("You want to add empty element");
+       }
+       Node<Item> newone = new Node<Item>();
        newone.item = item;
        if (!isEmpty()){
            newone.ahead = end;
@@ -54,11 +60,14 @@ public class Deque<Item> implements Iterable<Item>{
    }
    public Item removeFirst(){
        // remove and return the item from the front
-       if (isEmpty())
+       if (isEmpty()) {
            throw new NoSuchElementException("DeQueue underflow");
+       }
        Item item = front.item;
        front = front.next;
-       front.ahead = null;
+       if (front != null) front.ahead = null;
+       else end = null;
+       size--;
        return item;
    }
    public Item removeLast(){
@@ -67,16 +76,22 @@ public class Deque<Item> implements Iterable<Item>{
            throw new NoSuchElementException("DeQueue underflow");
        Item item = end.item;
        end = end.ahead;
-       end.next = null;
+       if (end != null) end.next = null;
+       else front = null;
+       size--;
        return item;
        
    }
    public Iterator<Item> iterator(){
        // return an iterator over items in order from front to end
-       return new ItemIterator();
+       return new ItemIterator<Item>(front);
    }
-   private class ItemIterator implements Iterator<Item>{
-       private Node current = front;
+   private class ItemIterator<Item> implements Iterator<Item>{
+       private Node<Item> current;
+       
+       public ItemIterator(Node<Item> front) {
+           current = front;
+       }
        @Override
        public boolean hasNext(){
            return current != null;
@@ -98,12 +113,17 @@ public class Deque<Item> implements Iterable<Item>{
        for (int i=0;i<10;i++){
            dq.addLast(i);
        }
+       /*
        System.out.println(dq.removeFirst());
        System.out.println(dq.removeLast());
+       System.out.println("remove all");
+       */
+       for (int i=0;i<10;i++){
+           System.out.println(dq.removeLast());
+       }
+       System.out.println("left");
        for (Integer i : dq){
            System.out.println(i);
        }
-       
-       
    }
 }

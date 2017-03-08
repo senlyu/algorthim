@@ -25,6 +25,9 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
     }
     public void enqueue(Item item){
         // add the item
+        if (item == null) {
+            throw new java.lang.NullPointerException("You want to add empty element");
+        }
         if (maxsize <= 2 * size){
             newa = (Item[]) new Object[maxsize * 2];
             for (int i = 1; i <= size; i++) {
@@ -39,8 +42,11 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
     }
     public Item dequeue(){
         // remove and return a random item
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("RandomizedQueue is empty!");
+        }
         if (maxsize >= 4 * size){
-            //newa =(Item[]) new Object[maxsize / 2];
+            newa =(Item[]) new Object[maxsize / 2];
             for (int i = 1; i <= size; i++) {
                 newa[i] = a[i];
             }
@@ -57,6 +63,9 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
     }
     public Item sample(){
         // return (but do not remove) a random item
+        if (isEmpty()) {
+            throw new java.util.NoSuchElementException("RandomizedQueue is empty!");
+        }
         int randomnum = StdRandom.uniform(1, size + 1);
         Item item = a[randomnum];
         return item;
@@ -100,7 +109,10 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
         System.out.println(rq.sample());
         
         System.out.println(rq.dequeue());
-        
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
         for (String i: rq){
             System.out.println("total " + i);
         }
